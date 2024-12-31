@@ -22,3 +22,31 @@ def char_count(s):
 # anagrams('abbc', 'aabc') # -> False
 # anagrams('po', 'popp') # -> false
 # anagrams('pp', 'oo') # -> false
+
+def most_frequent_char(s):
+  counter = {}
+
+  for char in s:
+    if char not in counter:
+      counter[char] = 0
+
+    counter[char] += 1
+
+  max = 0
+  result = ""
+
+  for key in counter:
+    if counter[key] > max:
+      max = counter[key]
+      result = key
+
+  return result
+
+most_frequent_char('bookeeper') # -> 'e'
+most_frequent_char('david') # -> 'd'
+most_frequent_char('abby') # -> 'b'
+most_frequent_char('mississippi') # -> 'i'
+most_frequent_char('potato') # -> 'o'
+most_frequent_char('eleventennine') # -> 'e'
+most_frequent_char('riverbed') # -> 'r'
+
