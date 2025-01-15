@@ -665,21 +665,96 @@ class Solution(object):
 # @return -1 if num is higher than the picked number
 #          1 if num is lower than the picked number
 #          otherwise return 0
-# def guess(num):
 
 class Solution(object):
-    def guessNumber(self, n):
+        def guessNumber(self, n):
+            """
+            :type n: int
+            :rtype: int
+            """
+                
+            low, high = 1, n
+            while low <= high:
+                mid = (low + high) // 2
+                result = guess(mid)
+                if result == 0: 
+                    return mid
+                elif result == -1:  
+                    high = mid - 1
+                else:  
+                    low = mid + 1
+                    
+# Given an input string s, reverse the order of the words.
+# A word is defined as a sequence of non-space characters. The words in s will be separated by at least one space.
+# Return a string of the words in reverse order concatenated by a single space.
+# Note that s may contain leading or trailing spaces or multiple spaces between two words. The returned string should only have a single space separating the words. Do not include any extra spaces.
+
+# Example 1:
+
+# Input: s = "the sky is blue"
+# Output: "blue is sky the"
+
+# Example 2:
+
+# Input: s = "  hello world  "
+# Output: "world hello"
+
+# Explanation: Your reversed string should not contain leading or trailing spaces.
+
+# Example 3:
+
+# Input: s = "a good   example"
+# Output: "example good a"
+# Explanation: You need to reduce multiple spaces between two words to a single space in the reversed string.
+
+class Solution(object):
+    def reverseWords(self, s):
         """
-        :type n: int
-        :rtype: int
+        :type s: str
+        :rtype: str
         """
-        low, high = 1, n
-        while low <= high:
-            mid = (low + high) // 2
-            result = guess(mid)
-            if result == 0: 
-                return mid
-            elif result == -1:  
-                high = mid - 1
-            else:  
-                low = mid + 1
+        
+        result = s.split()
+
+        return ' '.join(result[::-1])
+    
+# Given an integer array nums, return true if there exists a triple of indices (i, j, k) such that i < j < k and nums[i] < nums[j] < nums[k]. If no such indices exists, return false.
+
+# Example 1:
+
+# Input: nums = [1,2,3,4,5]
+# Output: true
+# Explanation: Any triplet where i < j < k is valid.
+
+# Example 2:
+
+# Input: nums = [5,4,3,2,1]
+# Output: false
+# Explanation: No triplet exists.
+
+# Example 3:
+
+# Input: nums = [2,1,5,0,4,6]
+# Output: true
+# Explanation: The triplet (3, 4, 5) is valid because nums[3] == 0 < nums[4] == 4 < nums[5] == 6.
+
+class Solution(object):
+    def increasingTriplet(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: bool
+        """
+
+        first = float('inf') # 5
+        second = float('inf') # 4
+        
+        for num in nums: # [5,4,3,2,1]
+            if num <= first:
+                first = num 
+            elif num <= second: 
+                second = num 
+            else:
+                return True
+        
+        return False
+
