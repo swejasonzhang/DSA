@@ -1340,3 +1340,56 @@ class Solution(object):
         
         nums[:] = [num for num in nums if num != val] 
         return len(nums)
+    
+# You are given a string num representing a large integer. An integer is good if it meets the following conditions:
+
+# It is a substring of num with length 3.
+# It consists of only one unique digit.
+# Return the maximum good integer as a string or an empty string "" if no such integer exists.
+
+# Note:
+
+# A substring is a contiguous sequence of characters within a string.
+# There may be leading zeroes in num or a good integer.
+
+# Example 1:
+
+# Input: num = "6777133339"
+# Output: "777"
+# Explanation: There are two distinct good integers: "777" and "333".
+# "777" is the largest, so we return "777".
+
+# Example 2:
+
+# nput: num = "2300019"
+# Output: "000"
+# Explanation: "000" is the only good integer.
+
+# Example 3:
+
+# Input: num = "42352338"
+# Output: ""
+# Explanation: No substring of length 3 consists of only one unique digit. Therefore, there are no good integers.    
+
+class Solution(object):
+    def largestGoodInteger(self, num):
+        """
+        :type num: str
+        :rtype: str
+        """
+        
+        result = ""
+        i, j = 0, 2
+
+        while j < len(num):
+            substring = num[i:j + 1]
+
+            if len(set(substring)) == 1 and len(result) == 0:
+                result = substring
+            elif len(set(substring)) == 1 and int(substring) > int(result):
+                result = substring
+            
+            i += 1
+            j += 1
+
+        return result
