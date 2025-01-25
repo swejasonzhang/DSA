@@ -1047,4 +1047,48 @@ class Solution(object):
                 x += 1 
             elif "--" in operation:
                 x -= 1 
+                
         return x
+
+# Given a string s, return the maximum number of occurrences of any substring under the following rules:
+
+# The number of unique characters in the substring must be less than or equal to maxLetters.
+# The substring size must be between minSize and maxSize inclusive.
+ 
+# Example 1:
+
+# Input: s = "aababcaab", maxLetters = 2, minSize = 3, maxSize = 4
+# Output: 2
+# Explanation: Substring "aab" has 2 occurrences in the original string.
+# It satisfies the conditions, 2 unique letters and size 3 (between minSize and maxSize).
+
+# Example 2:
+
+# Input: s = "aaaa", maxLetters = 1, minSize = 3, maxSize = 3
+# Output: 2
+# Explanation: Substring "aaa" occur 2 times in the string. It can overlap.
+
+from collections import Counter
+
+class Solution(object):
+    def maxFreq(self, s, maxLetters, minSize, maxSize):
+        """
+        :type s: str
+        :type maxLetters: int
+        :type minSize: int
+        :type maxSize: int
+        :rtype: int
+        """
+        
+        substring_count = Counter()
+        
+        # Traverse the string with a sliding window of size `minSize`
+        for i in range(len(s) - minSize + 1):
+            substring = s[i:i + minSize]
+            
+            # Check if substring has unique letters <= maxLetters
+            if len(set(substring)) <= maxLetters:
+                substring_count[substring] += 1
+        
+        # Return the maximum frequency from the Counter, or 0 if empty
+        return max(substring_count.values()) if substring_count else 0
