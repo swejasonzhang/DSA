@@ -1853,3 +1853,67 @@ class Solution(object):
             left_sum += root.left.val
 
         return left_sum + self.sumOfLeftLeaves(root.left) + self.sumOfLeftLeaves(root.right)
+    
+# You are given an integer array nums.
+
+# Start by selecting a starting position curr such that nums[curr] == 0, and choose a movement direction of either left or right.
+
+# After that, you repeat the following process:
+
+# If curr is out of the range [0, n - 1], this process ends.
+# If nums[curr] == 0, move in the current direction by incrementing curr if you are moving right, or decrementing curr if you are moving left.
+# Else if nums[curr] > 0:
+# Decrement nums[curr] by 1.
+# Reverse your movement direction (left becomes right and vice versa).
+# Take a step in your new direction.
+# A selection of the initial position curr and movement direction is considered valid if every element in nums becomes 0 by the end of the process.
+
+# Return the number of possible valid selections.
+
+# Example 1:
+
+# Input: nums = [1,0,2,0,3]
+
+# Output: 2
+
+# Explanation:
+
+# The only possible valid selections are the following:
+
+# Choose curr = 3, and a movement direction to the left.
+# [1,0,2,0,3] -> [1,0,2,0,3] -> [1,0,1,0,3] -> [1,0,1,0,3] -> [1,0,1,0,2] -> [1,0,1,0,2] -> [1,0,0,0,2] -> [1,0,0,0,2] -> [1,0,0,0,1] -> [1,0,0,0,1] -> [1,0,0,0,1] -> [1,0,0,0,1] -> [0,0,0,0,1] -> [0,0,0,0,1] -> [0,0,0,0,1] -> [0,0,0,0,1] -> [0,0,0,0,0].
+# Choose curr = 3, and a movement direction to the right.
+# [1,0,2,0,3] -> [1,0,2,0,3] -> [1,0,2,0,2] -> [1,0,2,0,2] -> [1,0,1,0,2] -> [1,0,1,0,2] -> [1,0,1,0,1] -> [1,0,1,0,1] -> [1,0,0,0,1] -> [1,0,0,0,1] -> [1,0,0,0,0] -> [1,0,0,0,0] -> [1,0,0,0,0] -> [1,0,0,0,0] -> [0,0,0,0,0].
+
+# Example 2:
+
+# Input: nums = [2,3,4,0,4,1,0]
+# Output: 0
+
+# Explanation:
+
+# There are no possible valid selections.
+
+def count_valid_selections(nums):
+    count = 0
+    n = len(nums)
+    
+    for start in range(n):
+        if nums[start] == 0:
+            for direction in [-1, 1]:
+                temp = nums[:]
+                curr = start
+                move = direction
+                
+                while 0 <= curr < n:
+                    if temp[curr] == 0:
+                        curr += move
+                    else:
+                        temp[curr] -= 1
+                        move = -move
+                        curr += move
+                
+                if all(x == 0 for x in temp):
+                    count += 1
+    
+    return count
